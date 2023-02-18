@@ -12,7 +12,7 @@ services:
       - .:/app
     command: yarn start
 
-  tests:
+  test:
     build:
       context: .
       dockerfile: Dockerfile.dev

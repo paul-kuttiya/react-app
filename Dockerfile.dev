@@ -8,5 +8,6 @@ COPY package.json yarn.lock ./
 RUN yarn
 
 COPY . .
+ENV CI=true
 
 # CMD ["yarn", "start"]

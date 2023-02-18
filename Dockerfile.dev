@@ -1,0 +1,12 @@
+FROM node:16-alpine
+
+WORKDIR /app
+
+# cache dependencies, build this step cache image only when dependencies changes
+# **destination is relative part of WORKDIR**
+COPY package.json yarn.lock ./
+RUN yarn
+
+COPY . .
+
+# CMD ["yarn", "start"]

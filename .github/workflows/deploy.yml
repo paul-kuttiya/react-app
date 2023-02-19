@@ -1,0 +1,41 @@
+name: Pull Request
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Test
+        run: docker-compose -f docker-compose.dev.yml run test
+
+      - name: Zip Package
+        run: zip -r deploy.zip * -x "**node_modules**"
+
+      - name: Get Timestamp
+        id: timestamp
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const time = new Date().toISOString()
+            const timestamp = time.replace(/[:\.]/g, '-')
+
+            return timestamp
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: pk-ebs-react
+          environment_name: production
+          version_label: ${{ steps.timestamp.outputs.result }}
+          region: us-east-1
+
+
+

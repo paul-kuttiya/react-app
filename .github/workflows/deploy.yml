@@ -38,6 +38,7 @@ jobs:
           environment_name: production
           version_label: ${{ steps.timestamp.outputs.result }}
           region: us-east-1
+          deployment_package: deploy.zip
 
 
 

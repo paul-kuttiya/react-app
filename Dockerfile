@@ -3,14 +3,16 @@ FROM node:16-alpine as builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn
+COPY package.json .
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 # nginx
 FROM nginx
+# expose port to ELB
+EXPOSE 80
 # copy from above container to current nginx container
 COPY --from=builder /app/build /usr/share/nginx/html

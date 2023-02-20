@@ -3,8 +3,6 @@ name: Deploy
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   deploy:
@@ -35,9 +33,10 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: pk-ebs-react
-          environment_name: production
-          version_label: ${{ steps.timestamp.outputs.result }}
+          environment_name: prod
+          version_label: deployment-${{ steps.timestamp.outputs.result }}
           region: us-east-1
+          deployment_package: deploy.zip
 
 
 

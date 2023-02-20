@@ -27,6 +27,7 @@ jobs:
 
             return timestamp
 
+      # elb is needed prior deploying; application_name and environment_name have to be running in ELB
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:

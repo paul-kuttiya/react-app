@@ -10,7 +10,7 @@ services:
     volumes:
       - /app/node_modules
       - .:/app
-    command: yarn start
+    command: npm run start
 
   test:
     build:
@@ -19,4 +19,4 @@ services:
     volumes:
       - /app/node_modules
       - .:/app
-    command: yarn test
+    command: npm run test
